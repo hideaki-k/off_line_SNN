@@ -53,15 +53,15 @@ cell_params_lif = {'cm': 0.25,      #nF
 w_cnn, l_cnn = cnnu.readmat(cnn_file)#('cnn_2.mat')# scaled is the 0.023 nsp training.
 predict = np.zeros(test_len)
 for offset in range(0, test_len, num_test):
-    print 'offset: ', offset
+    print ('offset: ', offset)
     test = tmp_x[offset:(offset+num_test), :]
     test = test * scale_K
     predict[offset:(offset+num_test)],  spikes= scnn.scnn_test(cell_params_lif, l_cnn, w_cnn, num_test, test, max_rate, dur_test, silence)
-    print predict[offset:(offset+num_test)] 
-    print sum(predict[offset:(offset+num_test)]==tmp_y[offset:(offset+num_test)]) 
+    print (predict[offset:(offset+num_test)]) 
+    print (sum(predict[offset:(offset+num_test)]==tmp_y[offset:(offset+num_test)]) )
     dir = cnn_file[cnn_file.rfind('/')+1:-4]
     spike_f = '../results/%s/spike_%d.npy'%(dir,offset)
     np.save(spike_f, spikes)
 np.save('predict_result',predict) 
-print np.sum(np.int16(predict==tmp_y))
+print (np.sum(np.int16(predict==tmp_y)))
 
