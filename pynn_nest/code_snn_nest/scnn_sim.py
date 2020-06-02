@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
+sys.path.append("home/nest/PyNN-nest-dev")
 import pyNN.nest as p
 import relu_utils as alg
 import spiking_relu as sr

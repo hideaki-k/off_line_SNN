@@ -1,5 +1,7 @@
 import numpy as np
 import random
+import sys
+sys.path.append("home/nest/PyNN-nest-dev")
 import pyNN.nest as p
 
 def plot_spikes(spikes, title):
