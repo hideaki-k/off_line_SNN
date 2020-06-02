@@ -1,1 +1,3 @@
-import sys
+from pyNN.nest import *
+print("helllo")
+
