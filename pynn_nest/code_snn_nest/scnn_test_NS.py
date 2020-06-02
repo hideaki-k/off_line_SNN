@@ -1,5 +1,5 @@
 import numpy as np
-import pyNN.nest as p
+
 import relu_utils as alg
 import spiking_relu as sr
 import cnn_utils as cnnu
@@ -7,6 +7,8 @@ import spiking_cnn as scnn
 import random
 import os.path
 import sys
+sys.path.append("home/nest/PyNN-nest-dev")
+import pyNN.nest as p
 #import matplotlib.cm as cm
 
 
