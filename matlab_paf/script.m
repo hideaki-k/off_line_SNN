@@ -3,7 +3,7 @@
 addpath(genpath('../'));
 % train a CNN with ReLU, trained weights will be in 'results/ReLU_small.mat'
 
-%test_example_CNN('ReLU_config', 'small_config', 'ReLU_small');
+test_example_CNN('ReLU_config', 'small_config', 'ReLU_small');
 
 % fine tune the CNN with Noisy Softplus
 % fine tuned weights will be save in 'results/ReLU_small_ft.mat'
