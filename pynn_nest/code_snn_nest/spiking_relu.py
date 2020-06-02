@@ -1,6 +1,7 @@
 import numpy as np
 # import matplotlib.pyplot as plt
 import sys
+print(sys.path)
 sys.path.append("home/nest/PyNN-nest-dev/pyNN/nest")
 import pyNN.nest as p
 import scipy.io as sio
