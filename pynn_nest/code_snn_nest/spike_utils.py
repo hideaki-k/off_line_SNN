@@ -14,5 +14,5 @@ def plot_spikes(spikes, title):
         plt.title(title)
 
     else:
-        print "No spikes received"
+        print ("No spikes received")
     plt.show()

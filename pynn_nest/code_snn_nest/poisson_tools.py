@@ -197,5 +197,5 @@ def spike_to_aerfile(spike_source_array_on, spike_source_array_off, file_name, i
         f.close()
         return AllTs, neuron_id, Polarity
     else:
-        print 'Output is []'
+        print ('Output is []')
         return []

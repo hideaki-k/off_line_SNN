@@ -30,7 +30,7 @@ def conv2d(x, w, mode='c'):
                 y_list = np.append(y_list, y, axis=0)
         return y_list
     else:
-        print 'x has to be an array of'
+        print ('x has to be an array of')
         return -1
 
 def conv_ReLU(input_num, output_num, input_list, w_list):
@@ -210,9 +210,9 @@ def conv_ReLU_scalew(input_num, output_num, input_list, w_list):
     for j in range(output_num):
         w_list[:,j] *= scale
         out_list[j] = predict_relu_rate(out_list[j], scale)
-    print 'scale: ', scale
+    print ('scale: ', scale)
     if np.mean(out_list[0])>0:
-        print np.mean(out_list[0][out_list[0]>0])
+        print (np.mean(out_list[0][out_list[0]>0]))
     return out_list, w_list
 
 def pool_ReLU_scalew(input_num, input_list, w_list):
@@ -227,9 +227,9 @@ def pool_ReLU_scalew(input_num, input_list, w_list):
     for i in range(input_num):
         out_rate = predict_relu_rate(out_list[i], scale)
         out_list[i] = out_rate
-    print 'scale: ', scale
+    print ('scale: ', scale)
     if np.mean(out_rate)>0:
-        print np.mean(out_rate[out_rate>0])
+        print (np.mean(out_rate[out_rate>0]))
     return out_list, w_list
 
 def out_ReLU_scalew(input_list, w_list):
@@ -242,9 +242,9 @@ def out_ReLU_scalew(input_list, w_list):
     w_list *= scale
     out_rate = predict_relu_rate(out_a, scale)
     out_list.append(out_rate)
-    print 'scale: ', scale
+    print ('scale: ', scale)
     if np.mean(out_rate)>0:
-        print np.mean(out_rate[out_rate>0])
+        print (np.mean(out_rate[out_rate>0]))
     return out_list, w_list
     
 def softplus(x):

@@ -145,18 +145,18 @@ def scnn_test(cell_params_lif, l_cnn, w_cnn, num_test, test, max_rate, dur_test,
     input_size = L[0][1]
     pops_list = []
     pops_list.append(init_inputlayer(input_size, test[:num_test, :], max_rate, dur_test, silence))
-    print 'SCNN constructing...'
+    print ('SCNN constructing...')
     for l in range(len(w_cnn)):
         pops_list.append(construct_layer(cell_params_lif, pops_list[l], L[l+1][0], L[l+1][1], w_cnn[l]))
     result = pops_list[-1][0]
     result.record()
     
-    print 'SCNN running...'
+    print ('SCNN running...')
     p.run((dur_test+silence)*num_test)
     spike_result = result.getSpikes(compatible_output=True)
     p.end()
     
-    print 'analysing...'
+    print ('analysing...')
     spike_result_count = count_spikes(spike_result, 10, num_test, dur_test, silence)
     predict = np.argmax(spike_result_count, axis=0)
     
