@@ -79,8 +79,8 @@ num_cluster = 1
 result_dir = sys.argv[1]
 num_mnist = int(sys.argv[2]) #10000 
 time_ws = map(int, sys.argv[3].split(',')) # for example 100,400,1000 ms
-print time_ws
+print (time_ws)
 result_timew = result_analysis(result_dir) #noisy_softplus relu
 for k in range(len(time_ws)):
     result_str = 'Time window: %d ms, accuracy: %.2f%%'%(time_ws[k],result_timew[k]/float(num_mnist)*100.)
-    print result_str
+    print (result_str)

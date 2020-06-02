@@ -60,13 +60,13 @@ def sampling(para, data_v):
     
 def init_label_dbn(train_data, label_data, nodes, eta=1e-3, batch_size=10, epoc=5):
     if train_data.shape[1] != nodes[0]:
-        print 'Dimention of train_data has to equal to the input layer size.'
+        print ('Dimention of train_data has to equal to the input layer size.')
         exit()
     elif label_data.shape[1] != nodes[-1]:
-        print 'Dimention of label_data has to equal to the output layer size.'
+        print ('Dimention of label_data has to equal to the output layer size.')
         exit()
     elif train_data.shape[0] != label_data.shape[0]:
-        print 'The amount of data and label should be the same.'
+        print ('The amount of data and label should be the same.')
         exit()
     dbnet = {}
     dbnet['train_x'] = train_data
