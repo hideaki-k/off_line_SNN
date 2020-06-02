@@ -12,7 +12,7 @@ import random
 def get_train_data():
     dir_path = './'
     file_name = dir_path + 'train-images.idx3-ubyte'
-    print file_name
+    print (file_name)
     
     f = open(file_name, "rb")
     magic_number, list_size, image_hight, image_width  = np.fromfile(f, dtype='>i4', count=4)
