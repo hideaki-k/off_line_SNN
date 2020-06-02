@@ -1,4 +1,4 @@
-import cnn_utils as cnnu
+#import cnn_utils as cnnu
 import itertools
 import scipy.io as sio
 import numpy as np
