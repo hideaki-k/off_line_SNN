@@ -1,45 +1,72 @@
 """
-Simple network with a Poisson spike source projecting to a pair of IF_curr_alpha neurons
+Injecting time-varying current into a cell.
 
-Andrew Davison, UNIC, CNRS
-August 2006
+There are four "standard" current sources in PyNN:
 
+    - DCSource
+    - ACSource
+    - StepCurrentSource
+    - NoisyCurrentSource
+
+Any other current waveforms can be implemented using StepCurrentSource.
+
+
+Usage: current_injection.py [-h] [--plot-figure] simulator
+
+positional arguments:
+  simulator      neuron, nest, brian or another backend simulator
+
+optional arguments:
+  -h, --help     show this help message and exit
+  --plot-figure  Plot the simulation results to a file
 
 """
 
-import numpy
-from pyNN.utility import get_script_args
+from pyNN.utility import get_simulator, normalized_filename
 
-simulator_name = get_script_args(1)[0]  
-exec("from pyNN.%s import *" % simulator_name)
+# === Configure the simulator ================================================
 
-tstop = 1000.0
-rate = 100.0
+sim, options = get_simulator(("--plot-figure", "Plot the simulation results to a file",
+                              {"action": "store_true"}))
+sim.setup()
 
-setup(timestep=0.1, min_delay=0.2, max_delay=1.0)
-    
-cell_params = {'tau_refrac':2.0,'v_thresh':-50.0,'tau_syn_E':2.0, 'tau_syn_I':2.0}
-output_population = Population(2, IF_curr_alpha, cell_params, label="output")
 
-number = int(2*tstop*rate/1000.0)
-numpy.random.seed(26278342)
-spike_times = numpy.add.accumulate(numpy.random.exponential(1000.0/rate, size=number))
-assert spike_times.max() > tstop
-print (spike_times.min())
+# === Create four cells and inject current into each one =====================
 
-input_population  = Population(1, SpikeSourceArray, {'spike_times': spike_times}, label="input")
+cells = sim.Population(4, sim.IF_curr_exp(v_thresh=-55.0, tau_refrac=5.0, tau_m=10.0))
 
-projection = Projection(input_population, output_population, AllToAllConnector())
-projection.setWeights(1.0)
+current_sources = [sim.DCSource(amplitude=0.5, start=50.0, stop=400.0),
+                   sim.StepCurrentSource(times=[50.0, 210.0, 250.0, 410.0],
+                                         amplitudes=[0.4, 0.6, -0.2, 0.2]),
+                   sim.ACSource(start=50.0, stop=450.0, amplitude=0.2,
+                                offset=0.1, frequency=10.0, phase=180.0),
+                   sim.NoisyCurrentSource(mean=0.5, stdev=0.2, start=50.0,
+                                          stop=450.0, dt=1.0)]
 
-input_population.record()
-output_population.record()
-output_population.record_v()
+for cell, current_source in zip(cells, current_sources):
+    cell.inject(current_source)
 
-run(tstop)
+filename = normalized_filename("Results", "current_injection", "pkl", options.simulator)
+sim.record('v', cells, filename, annotations={'script_name': __file__})
 
-output_population.printSpikes("Results/simpleNetwork_output_%s.ras" % simulator_name)
-input_population.printSpikes("Results/simpleNetwork_input_%s.ras" % simulator_name)
-output_population.print_v("Results/simpleNetwork_%s.v" % simulator_name)
+# === Run the simulation =====================================================
 
-end()
+sim.run(500.0)
+
+
+# === Save the results, optionally plot a figure =============================
+
+vm = cells.get_data().segments[0].filter(name="v")[0]
+sim.end()
+
+if options.plot_figure:
+    from pyNN.utility.plotting import Figure, Panel
+    from quantities import mV
+    figure_filename = filename.replace("pkl", "png")
+    Figure(
+        Panel(vm, y_offset=-10 * mV, xticks=True, yticks=True,
+              xlabel="Time (ms)", ylabel="Membrane potential (mV)",
+              ylim=(-96, -59)),
+        title="Current injection example",
+        annotations="Simulated with %s" % options.simulator.upper()
+    ).save(figure_filename)
