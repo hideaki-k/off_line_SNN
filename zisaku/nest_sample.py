@@ -1,72 +1,71 @@
 """
-Injecting time-varying current into a cell.
+A selection of Izhikevich neurons.
 
-There are four "standard" current sources in PyNN:
+Run as:
 
-    - DCSource
-    - ACSource
-    - StepCurrentSource
-    - NoisyCurrentSource
+$ python Izhikevich.py <simulator>
 
-Any other current waveforms can be implemented using StepCurrentSource.
-
-
-Usage: current_injection.py [-h] [--plot-figure] simulator
-
-positional arguments:
-  simulator      neuron, nest, brian or another backend simulator
-
-optional arguments:
-  -h, --help     show this help message and exit
-  --plot-figure  Plot the simulation results to a file
+where <simulator> is 'neuron', 'nest', etc.
 
 """
 
-from pyNN.utility import get_simulator, normalized_filename
+from numpy import arange
+from pyNN.utility import get_simulator, init_logging, normalized_filename
+
 
 # === Configure the simulator ================================================
 
-sim, options = get_simulator(("--plot-figure", "Plot the simulation results to a file",
-                              {"action": "store_true"}))
-sim.setup()
+sim, options = get_simulator(("--plot-figure", "Plot the simulation results to a file.", {"action": "store_true"}),
+                             ("--debug", "Print debugging information"))
+
+if options.debug:
+    init_logging(None, debug=True)
+
+sim.setup(timestep=0.01, min_delay=1.0)
 
 
-# === Create four cells and inject current into each one =====================
+# === Build and instrument the network =======================================
 
-cells = sim.Population(4, sim.IF_curr_exp(v_thresh=-55.0, tau_refrac=5.0, tau_m=10.0))
+neurons = sim.Population(3, sim.Izhikevich(a=0.02, b=0.2, c=-65, d=6, i_offset=[0.014, 0.0, 0.0]))
+spike_source = sim.Population(1, sim.SpikeSourceArray(spike_times=arange(10.0, 51, 1)))
 
-current_sources = [sim.DCSource(amplitude=0.5, start=50.0, stop=400.0),
-                   sim.StepCurrentSource(times=[50.0, 210.0, 250.0, 410.0],
-                                         amplitudes=[0.4, 0.6, -0.2, 0.2]),
-                   sim.ACSource(start=50.0, stop=450.0, amplitude=0.2,
-                                offset=0.1, frequency=10.0, phase=180.0),
-                   sim.NoisyCurrentSource(mean=0.5, stdev=0.2, start=50.0,
-                                          stop=450.0, dt=1.0)]
+connection = sim.Projection(spike_source, neurons[1:2], sim.OneToOneConnector(),
+                            sim.StaticSynapse(weight=3.0, delay=1.0),
+                            receptor_type='excitatory'),
 
-for cell, current_source in zip(cells, current_sources):
-    cell.inject(current_source)
+electrode = sim.DCSource(start=2.0, stop=92.0, amplitude=0.014)
+electrode.inject_into(neurons[2:3])
 
-filename = normalized_filename("Results", "current_injection", "pkl", options.simulator)
-sim.record('v', cells, filename, annotations={'script_name': __file__})
+neurons.record(['v'])  # , 'u'])
+neurons.initialize(v=-70.0, u=-14.0)
+
 
 # === Run the simulation =====================================================
 
-sim.run(500.0)
+sim.run(100.0)
 
 
 # === Save the results, optionally plot a figure =============================
 
-vm = cells.get_data().segments[0].filter(name="v")[0]
-sim.end()
+filename = normalized_filename("Results", "Izhikevich", "pkl",
+                               options.simulator, sim.num_processes())
+neurons.write_data(filename, annotations={'script_name': __file__})
 
 if options.plot_figure:
     from pyNN.utility.plotting import Figure, Panel
-    from quantities import mV
     figure_filename = filename.replace("pkl", "png")
+    data = neurons.get_data().segments[0]
+    v = data.filter(name="v")[0]
+    #u = data.filter(name="u")[0]
     Figure(
-        Panel(vm, y_offset=-10 * mV, xticks=True, yticks=True,
-              xlabel="Time (ms)", ylabel="Membrane potential (mV)",
-              ylim=(-96, -59)),
-        title="Current injection example",
+        Panel(v, ylabel="Membrane potential (mV)", xticks=True,
+              xlabel="Time (ms)", yticks=True),
+        #Panel(u, ylabel="u variable (units?)"),
         annotations="Simulated with %s" % options.simulator.upper()
     ).save(figure_filename)
+    print(figure_filename)
+
+
+# === Clean up and quit ========================================================
+
+sim.end()
