@@ -58,7 +58,7 @@ vm = cells.get_data().segments[0].filter(name="v")[0]
 sim.end()
 
 if options.plot_figure:
-    from pyNN.utilities.plotting import Figure, Panel
+    from pyNN.utility.plotting import Figure, Panel
     from quantities import mV
     figure_filename = filename.replace("pkl","png")
     Figure(
