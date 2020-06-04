@@ -7,10 +7,10 @@ function net = cnnff(net, x, opts, af)
     %disp(size(x))
     if strcmp(af.name, 'ReLU')
         paf = @(x)max(0,x) * p; 
-        disp(paf)
+        
     elseif strcmp(af.name, 'Noisy_Softplus')
         paf = @(x, sigma, af)noisy_softplus(x, sigma, af);
-        
+        %disp(sigma)
         %paf = @(x, sigma, af)((-10<=x & x<=10 & sigma~=0).*af.nsp_k.*sigma.*log(1+exp(x./(af.nsp_k.*sigma)))...
         %                      + (x<-10 | x>10 | sigma==0).*max(0,x)) * p; 
         %paf = @(x, sigma, af)af.nsp_k.*sigma.*log(1+exp(x./(af.nsp_k.*sigma)))*p;
