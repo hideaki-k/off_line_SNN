@@ -9,7 +9,7 @@ function test_example_CNN(af_file, config_file, result_file)
     load mnist_uint8; %database MNIST
     load(af_file); %parameters for the Parametric Activation Function (PAF)
     load(config_file); %parameters for CNN training
-    opts.alpha = af.alpha; %learning rate
+    opts.alpha = af.alpha %learning rate
     
     train_x = double(reshape(train_x',28,28,60000))/255; %training images
     test_x = double(reshape(test_x',28,28,10000))/255; %testing images

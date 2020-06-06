@@ -1,7 +1,7 @@
 function [ y ] = noisy_softplus( x, sigma, af)
 %NOISY_SOFTPLUS Summary of this function goes here
 %   Detailed explanation goes here
-   % disp(sigma)
+    %disp(sigma)
     p = af.tau_syn * af.S;
     % disp(af.tau_syn) % af.tau_syn = 0.005
     % disp(af.nsp_k) % af.nsp_k = 0.3

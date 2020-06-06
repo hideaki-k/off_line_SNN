@@ -4,7 +4,7 @@ function [ y ] = der_noisy_softplus(  x, sigma, af)
     p = af.tau_syn * af.S;
     %disp(af.tau_syn)    % af.tau_syn = 0.005
     % disp(af.S)           % af.S = 201 
-    disp(af.nsp_k)
+    %disp(af.nsp_k)
     valid_ind = find(x<10 & x>-10 & sigma~=0);
     %disp(af.nsp_k.*sigma(valid_ind))
     y = double(x>0);

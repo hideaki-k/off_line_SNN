@@ -12,6 +12,7 @@ function net = cnnff(net, x, opts, af)
     elseif strcmp(af.name, 'Noisy_Softplus')
         %disp(sigma)
         paf = @(x, sigma, af)noisy_softplus(x, sigma, af);
+        %paf = noisy_softplus(x, sigma, af);
         %disp(x)
         %disp(af)
         %paf = @(x, sigma, af)((-10<=x & x<=10 & sigma~=0).*af.nsp_k.*sigma.*log(1+exp(x./(af.nsp_k.*sigma)))...
