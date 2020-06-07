@@ -115,7 +115,7 @@ def construct_layer(cell_params_lif, pop_list_in, mode, k_size, w_layer):
     syn = 5.*0.96
     in_num = len(pop_list_in) #populations number in previous layer
     in_size = int(np.sqrt(pop_list_in[0].size)) #in_size*in_size = neuron_num per pop in the previous layer
-    k_size = int(k_size)
+    k_size = int(k_size) #new
     print("k_size",type(k_size))
     print("mode : ",mode)
     pop_layer = []
@@ -131,6 +131,7 @@ def construct_layer(cell_params_lif, pop_list_in, mode, k_size, w_layer):
         out_num = in_num #populations number in current layer
         #print in_num, out_num
         out_size = in_size/k_size
+        print("out_size : ",type(out_size))
         for j in range(out_num):
             pop_layer.append(p.Population(out_size*out_size, p.IF_curr_exp, cell_params_lif))
             pool_pops(pop_list_in[j], pop_layer[j], w_layer[0][0])# * 1000./max_F * max_curr / syn)
