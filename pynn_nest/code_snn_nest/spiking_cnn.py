@@ -176,7 +176,7 @@ def count_spikes(spikes, num_neuron, num_test, dur_test, silence):
     print("num_neuron : ",num_neuron)
     for i in range(num_neuron):
         index_i = np.where(spikes.segments[0].spiketrains == i)
-        spike_train = spikes[index_i, 1]
+        spike_train = spikes.segments[0].spiketrains[index_i, 1]
         temp = sr.counter(spike_train, range(0, (dur_test+silence)*num_test,dur_test+silence), dur_test)
         spike_count.append(temp)
     spike_count = np.array(spike_count)/(dur_test / 1000.)
