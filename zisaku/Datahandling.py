@@ -22,7 +22,7 @@ print("spikes_in : ",type(spikes_in))
 print(spikes_in.segments[0])
 spike_result = p_in.getSpikes(compatible_output=True)
 print("spike_result : ",type(spike_result ))
-print("spike_result : ",spike_result )
+print("spike_result[:,0] : ",spike_result[:,0] )
 data_out = p_out.get_data()
 
 fig_settings = {
