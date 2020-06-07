@@ -18,7 +18,7 @@ p_out[0:2].record(['v', 'w', 'gsyn_exc'])  # record other variables from first t
 sim.run(500.0)
 
 spikes_in = p_in.get_data()
-print("spikes_in : ",spikes_in)
+print("spikes_in : ",type(spikes_in))
 data_out = p_out.get_data()
 
 fig_settings = {
