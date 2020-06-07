@@ -159,16 +159,19 @@ def scnn_test(cell_params_lif, l_cnn, w_cnn, num_test, test, max_rate, dur_test,
     p.run((dur_test+silence)*num_test)
     spike_result = result.getSpikes(compatible_output=True)
     p.end()
-    
+    print("spike_result : ",spike_result)
     print ('analysing...')
     spike_result_count = count_spikes(spike_result, 10, num_test, dur_test, silence)
+    print("spike_result_count : ",spike_result_count)
     predict = np.argmax(spike_result_count, axis=0)
+    print("predict : ",predict)
     
 #     prob = np.exp(spike_result_count)/np.sum(np.exp(spike_result_count), axis=0)
     return predict, spike_result
     
 def count_spikes(spikes, num_neuron, num_test, dur_test, silence):
     spike_count = []
+    print("num_neuron : ",num_neuron)
     for i in range(num_neuron):
         index_i = np.where(spikes[:,0] == i)
         spike_train = spikes[index_i, 1]
