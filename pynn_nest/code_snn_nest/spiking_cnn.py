@@ -95,9 +95,9 @@ def out_pops(pop_list, pop2, w_layer):
         w = w_layer[:,i*in_size:(i+1)*in_size]
         conn_exci, conn_inhi = out_conn(w)
         if len(conn_exci)>0:
-            p.Projection(pop_list[i], pop2, p.FromListConnector(conn_exci), target='excitatory')
+            p.Projection(pop_list[i], pop2, p.FromListConnector(conn_exci), receptor_type='excitatory')
         if len(conn_inhi)>0:
-            p.Projection(pop_list[i], pop2, p.FromListConnector(conn_inhi), target='inhibitory')
+            p.Projection(pop_list[i], pop2, p.FromListConnector(conn_inhi), receptor_type='inhibitory')
     return
 
 def init_inputlayer(input_size, data, sum_rate, dur, silence):
