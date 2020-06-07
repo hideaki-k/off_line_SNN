@@ -153,7 +153,7 @@ def scnn_test(cell_params_lif, l_cnn, w_cnn, num_test, test, max_rate, dur_test,
     for l in range(len(w_cnn)):
         pops_list.append(construct_layer(cell_params_lif, pops_list[l], L[l+1][0], L[l+1][1], w_cnn[l]))
     result = pops_list[-1][0]
-    result.record() # new
+    result.record(['v', 'spikes']) # new
     
     print ('SCNN running...')
     p.run((dur_test+silence)*num_test)
