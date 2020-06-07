@@ -115,7 +115,8 @@ def construct_layer(cell_params_lif, pop_list_in, mode, k_size, w_layer):
     syn = 5.*0.96
     in_num = len(pop_list_in) #populations number in previous layer
     in_size = int(np.sqrt(pop_list_in[0].size)) #in_size*in_size = neuron_num per pop in the previous layer
-    print("in_size",type(in_size))
+    print("k_size",type(k_size))
+    print("mode : ",mode)
     pop_layer = []
     if mode > 0: #convoluational layer
         out_num = mode #populations number in current layer
