@@ -75,9 +75,9 @@ def conv_pops(pop1, pop2, w):
     out_size = int(np.sqrt(pop2.size))
     conn_exci, conn_inhi = conv_conn(in_size, out_size, w)
     if len(conn_exci)>0:
-        p.Projection(pop1, pop2, p.FromListConnector(conn_exci), target='excitatory')
+        p.Projection(pop1, pop2, p.FromListConnector(conn_exci), receptor_type='excitatory')
     if len(conn_inhi)>0:
-        p.Projection(pop1, pop2, p.FromListConnector(conn_inhi), target='inhibitory')
+        p.Projection(pop1, pop2, p.FromListConnector(conn_inhi), receptor_type='inhibitory')
     return
 
 def pool_pops(pop1, pop2, w):
@@ -85,7 +85,7 @@ def pool_pops(pop1, pop2, w):
     out_size = int(np.sqrt(pop2.size))
     conn_exci = pool_conn(in_size, out_size, w)
     if len(conn_exci)>0:
-        p.Projection(pop1, pop2, p.FromListConnector(conn_exci), target='excitatory')
+        p.Projection(pop1, pop2, p.FromListConnector(conn_exci), receptor_type='excitatory')
     return
 
 def out_pops(pop_list, pop2, w_layer):
