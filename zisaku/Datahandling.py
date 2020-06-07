@@ -1,34 +1,33 @@
-import pyNN.nest as sim  # can of course replace `neuron` with `nest`, `brian`, etc.
+import pyNN.neuron as sim  # can of course replace `neuron` with `nest`, `brian`, etc.
 import matplotlib.pyplot as plt
 import numpy as np
 
 sim.setup(timestep=0.01)
-p_in = sim.Population(10, sim.SpikeSourcePoisson(rate=10.0),label="input")
-p_out = sim.Population(10, sim.EIF_cond_exp_isfa_ista(),label="AdExpneurons")
+p_in = sim.Population(10, sim.SpikeSourcePoisson(rate=10.0), label="input")
+p_out = sim.Population(10, sim.EIF_cond_exp_isfa_ista(), label="AdExp neurons")
 
 syn = sim.StaticSynapse(weight=0.05)
 random = sim.FixedProbabilityConnector(p_connect=0.5)
 connections = sim.Projection(p_in, p_out, random, syn, receptor_type='excitatory')
 
-p_in.record("spikes")
-p_out.record("spikes")
-p_out[0:2].record(["v","w","gsyn_exc"])
+p_in.record('spikes')
+p_out.record('spikes')                    # record spikes from all neurons
+p_out[0:2].record(['v', 'w', 'gsyn_exc'])  # record other variables from first two neurons
 
 sim.run(500.0)
-
 
 spikes_in = p_in.get_data()
 data_out = p_out.get_data()
 
 fig_settings = {
-    "lines.linewifth":0.5,
-    "axes.linewidth":0.5,
-    "axes.labelsize":"small",
-    "legend.fontsize":"small",
-    "font.size":8
+    'lines.linewidth': 0.5,
+    'axes.linewidth': 0.5,
+    'axes.labelsize': 'small',
+    'legend.fontsize': 'small',
+    'font.size': 8
 }
 plt.rcParams.update(fig_settings)
-plt.figure(1,figsize=(6,8))
+plt.figure(1, figsize=(6, 8))
 
 
 def plot_spiketrains(segment):
