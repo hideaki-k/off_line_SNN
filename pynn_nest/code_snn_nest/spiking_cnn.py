@@ -159,7 +159,7 @@ def scnn_test(cell_params_lif, l_cnn, w_cnn, num_test, test, max_rate, dur_test,
     p.run((dur_test+silence)*num_test)
     #spike_result = result.getSpikes(compatible_output=True)
     #spike_result = result.get_spike_counts(gather=True) #tuple datta
-    spike_result = get_data('spikes') 
+    spike_result = result.get_data('spikes') 
     p.end()
     print("spike_result : ",spike_result)
     print ('analysing...')
