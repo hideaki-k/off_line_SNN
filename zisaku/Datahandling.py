@@ -27,7 +27,7 @@ fig_settings = {
     "legend.fontsize":"small",
     "font.size":8
 }
-plt.rcParamms.update(fig_settings)
+plt.rcParams.update(fig_settings)
 plt.figure(1,figsize=(6,8))
 
 
