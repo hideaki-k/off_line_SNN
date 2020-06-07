@@ -51,7 +51,7 @@ cell_params_lif = {'cm': 0.25,      #nF
                    'v_rest': -65.0, #mV
                    'v_thresh': -50.0#mV
                    }
-                    
+print(cell_params_lif)   
 w_cnn, l_cnn = cnnu.readmat(cnn_file)#('cnn_2.mat')# scaled is the 0.023 nsp training.
 predict = np.zeros(test_len)
 for offset in range(0, test_len, num_test):
