@@ -32,7 +32,7 @@ def conv_conn(in_size, out_size, w):
 
 def pool_conn(in_size, out_size, w):
     conn_list = []
-    step = in_size/out_size
+    step = in_size//out_size
     for x_ind in range(out_size):
         for y_ind in range(out_size):
             out_ind = x_ind * out_size + y_ind
