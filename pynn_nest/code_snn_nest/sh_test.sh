@@ -1,4 +1,4 @@
-source ~/env/nest_pynn0.7/bin/activate
+source ~/env/nest_pynn0.9/bin/activate
 
 cnn_file=ReLU_small_ft.mat #trained weights
 newdir=${cnn_file::${#cnn_file}-4}
