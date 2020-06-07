@@ -1,4 +1,4 @@
-import pyNN.neuron as sim  # can of course replace `neuron` with `nest`, `brian`, etc.
+import pyNN.nest as sim  # can of course replace `neuron` with `nest`, `brian`, etc.
 import matplotlib.pyplot as plt
 import numpy as np
 
