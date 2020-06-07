@@ -130,7 +130,7 @@ def construct_layer(cell_params_lif, pop_list_in, mode, k_size, w_layer):
     elif mode == 0: #pooling layer
         out_num = in_num #populations number in current layer
         #print in_num, out_num
-        out_size = in_size/k_size
+        out_size = in_size//k_size
         print("out_size : ",type(out_size))
         for j in range(out_num):
             pop_layer.append(p.Population(out_size*out_size, p.IF_curr_exp, cell_params_lif))
