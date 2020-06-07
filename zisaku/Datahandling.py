@@ -20,7 +20,7 @@ sim.run(500.0)
 spikes_in = p_in.get_data()
 print("spikes_in : ",type(spikes_in))
 print("spikes_in.segments[0].spiketrains",spikes_in.segments[0].spiketrains)
-print("spikes_in.segments[1].spiketrains",spikes_in.segments[1].spiketrains)
+
 print("spikes_in.segments[-1].spiketrains",spikes_in.segments[-1].spiketrains)
 spike_result = p_in.getSpikes(compatible_output=True)
 print("spike_result : ",type(spike_result ))
