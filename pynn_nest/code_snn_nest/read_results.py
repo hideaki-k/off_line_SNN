@@ -17,7 +17,9 @@ def get_result(spikes, time_window):
     correct_latency = np.zeros(num_test)
     digit_latency = dur_test*np.ones((num_digit,num_test))
     for i in range(num_output):
-        spike_train = spikes.segments[0].spiketrains[i]
+        index_i = np.where(spikes[:,0] == i)
+        spike_train = spikes[index_i, 1][0]
+        
         
         for key, igroup in itertools.groupby(spike_train, lambda x: x // (dur_test+silence)):
             test_id = int(key)
@@ -58,6 +60,7 @@ def result_analysis(mat_dir):
             spike_f = '%s/spike_%d.npy'%(mat_dir, test_offset)
             print(spike_f)
             spikes = np.load(spike_f,allow_pickle=True)
+            print(spikes)
             predict, fastest, latency, correct_l, digit_l = get_result(spikes, time_w)
             predict_max[test_offset:test_offset+num_test] = predict
             fastest_neuron[test_offset:test_offset+num_test] = fastest
