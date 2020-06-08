@@ -60,8 +60,8 @@ def result_analysis(mat_dir):
             print(spike_f)
             spikes = np.load(spike_f,allow_pickle=True)
             print("spikes :",spikes)
-            print("spikes[0]",spikes[0])
-            print("spikes[0][1]",spikes[0][1])
+            print("spikes.ndim",spikes.ndim)
+            print("spikes.shape",spikes.shape)
             #print("spikes.type : ",spikes.type)
             predict, fastest, latency, correct_l, digit_l = get_result(spikes, time_w)
             predict_max[test_offset:test_offset+num_test] = predict
