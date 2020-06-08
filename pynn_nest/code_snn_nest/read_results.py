@@ -57,6 +57,7 @@ def result_analysis(mat_dir):
     for time_w in time_ws:
         for test_offset in range(0, num_mnist, num_test):
             spike_f = '%s/spike_%d.npy'%(mat_dir, test_offset)
+            print(spike_f)
             spikes = np.load(spike_f)
             predict, fastest, latency, correct_l, digit_l = get_result(spikes, time_w)
             predict_max[test_offset:test_offset+num_test] = predict
