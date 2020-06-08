@@ -17,8 +17,7 @@ def get_result(spikes, time_window):
     correct_latency = np.zeros(num_test)
     digit_latency = dur_test*np.ones((num_digit,num_test))
     for i in range(num_output):
-        index_i = np.where(spikes[:,0] == i)
-        spike_train = spikes[index_i, 1][0]
+        spike_train = spikes.segments[0].spiketrains[i]
         
         
         for key, igroup in itertools.groupby(spike_train, lambda x: x // (dur_test+silence)):
