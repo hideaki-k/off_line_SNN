@@ -60,7 +60,7 @@ def result_analysis(mat_dir):
             spike_f = '%s/spike_%d.npy'%(mat_dir, test_offset)
             print(spike_f)
             spikes = np.load(spike_f,allow_pickle=True)
-            print(spikes)
+            print("spikes :",spikes)
             predict, fastest, latency, correct_l, digit_l = get_result(spikes, time_w)
             predict_max[test_offset:test_offset+num_test] = predict
             fastest_neuron[test_offset:test_offset+num_test] = fastest
